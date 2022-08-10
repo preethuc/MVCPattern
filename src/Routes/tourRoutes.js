@@ -1,6 +1,8 @@
 const express = require('express');
+// import express from 'express'
 const router = express.Router();
 const tourController = require('../../src/Controller/tourController')
+// import tourController from '../../src/Controller/tourController'
 //ROUTES
 // router.param('id',(req,res,next,val)=>{
 //   console.log(`Tour id is: ${val}`);
@@ -12,7 +14,8 @@ const tourController = require('../../src/Controller/tourController')
 router
   .route('/')
   .get(tourController.getAllTour)
-  .post(tourController.checkBody,tourController.createTour);
+  .post(tourController.createTour);
+  // .post(tourController.checkBody,tourController.createTour);--- checkbody is invalid by using mongoose
 router
   .route('/:id')
   .get(tourController.getTourById)

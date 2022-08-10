@@ -1,7 +1,7 @@
- const app = require('./app');
-// const mongoose = require('mongoose');
-import mongoose from 'mongoose';
-mongoose.connect('mongodb://localhost:27017/natours');
+const app = require('../src/app');
+const mongoose = require('mongoose');
+// import mongoose from 'mongoose';
+mongoose.connect('mongodb://localhost:27017/Data-Natours');
 mongoose.connection
   .once('open', () => {
     console.log('DB connected');
