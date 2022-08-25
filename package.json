@@ -1,26 +1,38 @@
 {
   "name": "nators",
   "version": "1.0.0",
-  "description": "\"Learning Node,Express and mongoDB",
-  "main": "app.js",
-  "scripts": {
-    "start": "npm run build && node lib/server.js",
-    "build": "babel src -s -D -d lib"
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
   },
-  "author": "preetha",
-  "license": "ISC",
   "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
     "express": "^4.18.1",
-    "mongoose": "^6.5.0",
+    "mongoose": "^6.5.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.19"
+    "node": "^18.7.0",
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-node": "0.0.1-security",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
     "babel-runtime": "^6.26.0"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "start": "babel src -d lib && node lib/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/preethuc/MVCPattern.git"
+  },
+  "author": "preetha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/preethuc/MVCPattern/issues"
+  },
+  "homepage": "https://github.com/preethuc/MVCPattern#readme"
 }

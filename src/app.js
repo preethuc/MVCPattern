@@ -2,11 +2,10 @@ const express = require('express');
 // import express from 'express'
 const app = express();
 const morgan = require('morgan');
-// import morgan from 'morgan';
+// import morgan from 'mapp.use(morgan('dev'));organ';
 const tourRouter = require('../src/Routes/tourRoutes');
 const userRouter = require('../src/Routes/userRoutes');
 //1.MIDDLEWARE
-
 app.use(express.json());
 app.use(morgan('dev'));
 app.use((req, res, next) => {

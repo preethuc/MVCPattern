@@ -11,6 +11,10 @@ const tourController = require('../../src/Controller/tourController')
 //middleware--param
 //router.param('id',tourController.checkID)
 
+router.route('/top-5-cheap').get(tourController.aliasTopTours,tourController.getAllTour)
+router.route('/tour-stats').get(tourController.getTourStats)
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan)
+
 router
   .route('/')
   .get(tourController.getAllTour)
