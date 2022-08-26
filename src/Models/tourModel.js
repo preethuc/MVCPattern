@@ -7,6 +7,10 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'Tour must have a name'],
     unique: [true, 'Tour name must be unique'],
   },
+  secretTour:{
+    type:Boolean,
+    default:false
+  },
   note:String,
   duration: {
     type: Number,
@@ -60,12 +64,25 @@ const tourSchema = new mongoose.Schema({
 tourSchema.virtual('durationWeeks').get(function(){
   return this.duration / 7;
 })
+//DOCUMENT MIDDLEWARE----Save m/w only for .save and .create mongoose method
 tourSchema.pre('save',function(next){
   this.note = slugify(this.name, {lower: true})
   console.log("save event")
   next()
 })
-
+tourSchema.pre('save',function(next){
+  console.log("Will save document")
+  next()
+})
+tourSchema.post('save',function(doc,next){
+  console.log(doc)
+  next()
+})
+//QUERY MIDDLEWARE 
+tourSchema.pre('find',function(next){
+  this.find({ secretTour: { $ne: true} })
+  next()
+})
 const Tour = mongoose.model('Tour',tourSchema);
 
 module.exports = Tour;
