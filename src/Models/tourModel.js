@@ -6,10 +6,21 @@ const tourSchema = new mongoose.Schema({
     type:String,
     required: [true, 'Tour must have a name'],
     unique: [true, 'Tour name must be unique'],
+    trim:true,
+    //validators
+    maxlength:[60, 'A tour name must have less or equal than 40 characters'],  
+    minlength:[10, 'A tour name must have greater or equal than 10 characters'], 
+    //own validators
+    // validate: [validator.isAlpha, 'Tour name must only contains alphabets']
   },
   secretTour:{
     type:Boolean,
-    default:false
+    default:false,
+    enum:{
+      //enum validator ---- strings
+      values:['easy', 'medium', 'difficult'],
+      message: 'Difficulty must be easy, medium or difficult'
+      }
   },
   note:String,
   duration: {
@@ -27,6 +38,9 @@ const tourSchema = new mongoose.Schema({
   ratingsAverage: {
     type: Number,
     default: 0,
+    //validators
+    min:[1, 'A Tour must have greater or equal to 1.0'],  
+    max:[5, 'A Tour must have less or equal to 5.0']    
   },
   ratingsQuantity: {
     type: Number,
@@ -40,6 +54,12 @@ const tourSchema = new mongoose.Schema({
   Summery: {
     type: String,
     trim: true,
+    validate:{
+      validator:function(disPrice){
+          return disPrice < this.price; //the range is false --- error occurs
+      },
+      message:'Discount price {VALUE} must be less than the regular price'
+    }
   },
   description: {
     type: String,
@@ -79,10 +99,21 @@ tourSchema.post('save',function(doc,next){
   next()
 })
 //QUERY MIDDLEWARE 
-tourSchema.pre('find',function(next){
+tourSchema.pre(/^find/,function(next){ //trigger the events starts with find
+//tourSchema.pre('find',function(next){
+//tourSchema.pre('findById',function(next){
   this.find({ secretTour: { $ne: true} })
   next()
 })
+//AGGREGATION MIDDLEWARE
+//used in monthlyplan and stats routes
+tourSchema.pre('aggregate',function(next){
+  this.pipeline().unshift({$match : { secretTour : { $ne : true} } }) //added on the firstline
+  // this.pipeline().shift()  //remove first line
+  console.log(this.pipeline());
+  next();
+})
+
 const Tour = mongoose.model('Tour',tourSchema);
 
 module.exports = Tour;
