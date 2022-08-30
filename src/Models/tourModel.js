@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify')
+const validator = require('validator')
 // import mongoose from "mongoose";
 const tourSchema = new mongoose.Schema({
   name: {
@@ -11,16 +12,11 @@ const tourSchema = new mongoose.Schema({
     maxlength:[60, 'A tour name must have less or equal than 40 characters'],  
     minlength:[10, 'A tour name must have greater or equal than 10 characters'], 
     //own validators
-    // validate: [validator.isAlpha, 'Tour name must only contains alphabets']
+  //  validate: [validator.isAlpha, 'Tour name must only contains alphabets']
   },
   secretTour:{
     type:Boolean,
-    default:false,
-    enum:{
-      //enum validator ---- strings
-      values:['easy', 'medium', 'difficult'],
-      message: 'Difficulty must be easy, medium or difficult'
-      }
+    default:false
   },
   note:String,
   duration: {
@@ -34,6 +30,12 @@ const tourSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     required: [true, 'A tour must have a difficulty'],
+     //validators
+     enum:{
+      //enum validator ---- strings
+      values:['easy', 'medium', 'difficult'],
+      message: 'Difficulty must be easy, medium or difficult'
+      }
   },
   ratingsAverage: {
     type: Number,
@@ -50,16 +52,19 @@ const tourSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Tour must have a price'],
   },
-  priceDiscount: Number,
-  Summery: {
-    type: String,
-    trim: true,
+  priceDiscount: {
+    type:Number,
     validate:{
       validator:function(disPrice){
           return disPrice < this.price; //the range is false --- error occurs
       },
       message:'Discount price {VALUE} must be less than the regular price'
     }
+  },
+  Summery: {
+    type: String,
+    trim: true,
+    
   },
   description: {
     type: String,

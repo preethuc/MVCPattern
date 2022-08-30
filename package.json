@@ -12,7 +12,8 @@
     "mongoose": "^6.5.2",
     "morgan": "^1.10.0",
     "node": "^18.7.0",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -23,7 +24,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
-    "start": "babel src -d lib && node lib/server.js"
+    "start": "babel src -d lib && node lib/server.js",
+    "start:prod":"babel src -d lib && NODE_ENV=production node lib/server.js",
+    "start:dev":"babel src -d lib && NODE_ENV=development node lib/server.js"
   },
   "repository": {
     "type": "git",
