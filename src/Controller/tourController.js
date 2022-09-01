@@ -18,6 +18,8 @@ exports.getAllTour = catchAsync(async (req, res,next) => {
     // const tours = await Tour.find()
     //another way of filtering by query
     // const tours = await Tour.find().where('difficulty').equals('easy');
+    // Tour.find().populate('tours','name')
+ 
     //SEND RESPONSE
     res.status(200).json({
       status: 'success',
